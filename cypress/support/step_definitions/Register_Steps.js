@@ -6,24 +6,24 @@ import {
   When,
 } from "@badeball/cypress-cucumber-preprocessor";
 
-let cleanDatabase = false;
+// let cleanDatabase = false;
 
-Before({ tags: "@Registration or @Login" }, () => {
-  if (!cleanDatabase) {
-    cy.visit("https://parabank.parasoft.com/parabank/admin.htm");
-    // Clear Database
-    cy.get('button[value="CLEAN"]').click();
-    cleanDatabase = true;
-    // Select Data Access Mode
-    cy.get("input[value='restjson']").click();
-    // Set initial balance and minimum balance
-    cy.get("#initialBalance").clear().type("500.00");
-    cy.get("#minimumBalance").clear().type("100.00");
-    cy.get("input[value='Submit']").click();
-  }
-});
+// Before({ tags: "@Registration or @Login" }, () => {
+//   if (!cleanDatabase) {
+//     cy.visit("https://parabank.parasoft.com/parabank/admin.htm");
+//     // Clear Database
+//     cy.get('button[value="CLEAN"]').click();
+//     cleanDatabase = true;
+//     // Select Data Access Mode
+//     cy.get("input[value='restjson']").click();
+//     // Set initial balance and minimum balance
+//     cy.get("#initialBalance").clear().type("500.00");
+//     cy.get("#minimumBalance").clear().type("100.00");
+//     cy.get("input[value='Submit']").click();
+//   }
+// });
 
-Given("I navigate to the ParaBank homepage", () => {
+Given("I open the ParaBank homepage", () => {
   cy.visit("https://parabank.parasoft.com/parabank/index.htm");
 });
 

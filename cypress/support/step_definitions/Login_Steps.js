@@ -17,6 +17,15 @@ When("I enter the password {string}", (password) => {
   cy.get("[name='password']").type(password);
 });
 
+When(
+  "I log in with username {string} and password {string}",
+  (username, password) => {
+    cy.get('input[name="username"]').type(username);
+    cy.get('input[name="password"]').type(password);
+    cy.get('input[value="Log In"]').click();
+  }
+);
+
 When("I click the {string} button", (btnName) => {
-  cy.get(`[value='${btnName}']`).click();
+  cy.get(`input[value='${btnName}']`).click();
 });
