@@ -13,8 +13,38 @@ When("I click Account Overview link", () => {
     });
 });
 
+When("I record the account id and balance", () => {
+  // save the firts account number
+  cy.get("tbody tr:nth-child(1) td:nth-child(1)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("accountNumber");
+    });
+
+  // save the first account balance
+  cy.get("tbody tr:nth-child(1) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim().split("$").at(1)).as("accountBalance");
+    });
+});
+
 When("I click the first account number", () => {
   cy.xpath("(//td)[1]/a").click();
+});
+
+When("I should see the account balance decrease by the payment amount", () => {
+  cy.visit("https://parabank.parasoft.com/parabank/overview.htm");
+
+  cy.get("@accountBalance").then((balance) => {
+    cy.get("@amount").then((paymentAmount) => {
+      const currentBalance = balance - paymentAmount;
+      cy.get("tbody tr:nth-child(1) td:nth-child(2)").should(
+        "have.text",
+        `$${currentBalance}`
+      );
+    });
+  });
 });
 
 Then("I should redirected to Account Overview page", () => {

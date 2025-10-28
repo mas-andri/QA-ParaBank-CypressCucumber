@@ -1,4 +1,4 @@
-import { BeforeAll } from "@badeball/cypress-cucumber-preprocessor";
+import { Before, BeforeAll } from "@badeball/cypress-cucumber-preprocessor";
 
 BeforeAll(() => {
   cy.visit("https://parabank.parasoft.com/parabank/admin.htm");
@@ -8,6 +8,7 @@ BeforeAll(() => {
   // Select Data Access Mode
   cy.get("input[value='restjson']").click();
   cy.get("#soapEndpoint").clear();
+  cy.get("#restEndpoint").clear();
   cy.get("#endpoint").clear();
 
   // Set initial balance and minimum balance
@@ -31,5 +32,22 @@ BeforeAll(() => {
   cy.get("[name='customer.password']").type("@Patrick999");
   cy.get("[name='repeatedPassword']").type("@Patrick999");
   cy.get("[value='Register']").click();
+  cy.get("a[href='logout.htm']").click();
+});
+
+Before({ tags: "@TransferFunds" }, () => {
+  // Login
+  cy.get('input[name="username"]').type("patrick999");
+  cy.get('input[name="password"]').type("@Patrick999");
+  cy.get('input[value="Log In"]').click();
+
+  // Create New Account
+  cy.contains("a", "Open New Account").click();
+  cy.get("#type").select("CHECKING");
+  cy.get("#fromAccountId").select(0);
+  cy.get("input[value='Open New Account']").click();
+
+  //logout
+  cy.wait(1000);
   cy.get("a[href='logout.htm']").click();
 });

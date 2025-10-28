@@ -38,7 +38,7 @@
 #     And I click the "Transfer" button
 #     Then I should see the relevant page and message "Transfer Complete!"
 #     And I should see the tranction history
-#     # example url: https://parabank.parasoft.com/parabank/activity.htm?id=14454
+#   # example url: https://parabank.parasoft.com/parabank/activity.htm?id=14454
 
 #   Scenario: TC-024, Verify the error message shown when transferring between the same accounts
 #     Given I navigate to the ParaBank homepage
@@ -76,6 +76,27 @@
 #     And I click the "Transfer" button
 #     Then I should see the relevant page and message "Transfer was rejected"
 
+@TransferFunds
+Feature: Para Bank - Transfer Funds
+
+  Background:
+    Given I open the ParaBank homepage
+    And I log in with username "patrick999" and password "@Patrick999"
+    And I click the "Transfer Funds" link
+
+  Scenario: TC-021, Verify successful fund transfer between accounts
+    When I enter transfer amount "100"
+    And I select a valid from account
+    And I select a valid to account
+    And I click the "Transfer" button
+    Then I should see a message "Transfer Complete!"
+
+# Scenario: TC-022, Verify balance updates correctly after transfer
+#   When I enter transfer amount "100"
+#   And I select a valid from account
+#   And I select a valid to account
+#   And I click the "Transfer" button
+#   Then I should see the updated balance in both accounts
 
 
 
