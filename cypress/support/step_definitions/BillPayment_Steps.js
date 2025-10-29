@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const { When } = require("@badeball/cypress-cucumber-preprocessor");
+import { When } from "@badeball/cypress-cucumber-preprocessor";
 
 When("I enter Payee Name {string}", (payeeName) => {
   cy.get("input[name='payee.name']").type(payeeName);
@@ -36,13 +36,6 @@ When("I enter Verify Account {string}", (account) => {
 
 When("I enter Amount {string}", (amount) => {
   cy.get("input[name='amount']").type(amount);
-
-  // save payment amount
-  // cy.get("input[name='amount']")
-  //   .invoke("text")
-  //   .then((text) => {
-  //     cy.wrap(text.trim()).as("paymentAmount");
-  //   });
 });
 
 When("I should see the transaction in account history", () => {
