@@ -6,7 +6,7 @@ BeforeAll(() => {
   cy.get('button[value="CLEAN"]').click();
 
   // Select Data Access Mode
-  cy.get("input[value='restjson']").click();
+  cy.get("input[value='jdbc']").click();
   cy.get("#soapEndpoint").clear();
   cy.get("#restEndpoint").clear();
   cy.get("#endpoint").clear();

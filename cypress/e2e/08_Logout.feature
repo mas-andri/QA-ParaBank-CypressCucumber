@@ -3,6 +3,7 @@ Feature: Para Bank - Logout
   Background: Precondition
     Given I open the ParaBank homepage
     When I log in with username "patrick999" and password "@Patrick999"
+    And I click the "Log In" button
 
 
   Scenario: TC-044, Verify successful logout from application

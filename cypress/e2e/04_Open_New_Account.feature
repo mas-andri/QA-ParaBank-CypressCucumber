@@ -2,7 +2,8 @@ Feature: Para Bank - Open New Account
 
   Background:
     Given I open the ParaBank homepage
-    And I log in with username "patrick999" and password "@Patrick999"
+    When I log in with username "patrick999" and password "@Patrick999"
+    And I click the "Log In" button
     And I click the "Open New Account" link
 
   Scenario: TC-015 - Verify Open New Account page loads successfully
@@ -19,7 +20,7 @@ Feature: Para Bank - Open New Account
     And I select account type "SAVINGS"
     And I choose an existing account
     And I click the "Open New Account" button
-    Then I should see a message "Account Opened!"
+    Then I should see a message "Congratulations, your account is now open"
     And I should see my new account number displayed
 
   Scenario: TC-019, Verify user cannot open a new account if the funding account has insufficient balance
@@ -30,5 +31,5 @@ Feature: Para Bank - Open New Account
 
   Scenario: TC-020, Verify user cannot access the "Open New Account" page without logging in
     And I click the "Log Out" link
-    Then I attempt to access the Open New Account page directly
+    Then I try to access restricted endpoint "https://parabank.parasoft.com/parabank/openaccount.htm"
     And I should be redirected to the login page

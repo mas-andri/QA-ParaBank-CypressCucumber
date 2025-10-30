@@ -82,6 +82,7 @@ Feature: Para Bank - Transfer Funds
   Background:
     Given I open the ParaBank homepage
     And I log in with username "patrick999" and password "@Patrick999"
+    And I click the "Log In" button
     And I click the "Transfer Funds" link
 
   Scenario: TC-021, Verify successful fund transfer between accounts

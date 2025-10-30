@@ -8,9 +8,8 @@ When("I enter transfer amount {string}", (amount) => {
 });
 
 When("I select a valid from account", () => {
-  // cy.get("#fromAccountId").select(0);
   cy.get("#rightPanel").then(($el) => {
-    if ($el.find("select[id='#fromAccountId']").length > 0) {
+    if ($el.find("select[id='fromAccountId']").length > 0) {
       // Element #fromAccountId exists
       cy.get("#fromAccountId").select(0);
     } else {
@@ -18,7 +17,6 @@ When("I select a valid from account", () => {
       cy.get("select[name='fromAccountId']").select(0);
     }
   });
-  // cy.get("select[name='fromAccountId").select(0);
 });
 
 When("I select a valid to account", () => {

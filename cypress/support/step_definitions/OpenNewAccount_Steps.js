@@ -1,10 +1,6 @@
 /// <reference types="cypress" />
 import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
-When("I click the {string} link", (link) => {
-  cy.contains("a", link).click();
-});
-
 When("I select account type {string}", (accountType) => {
   cy.get("#type").select(accountType);
 });
@@ -15,15 +11,10 @@ When("I choose an existing account", () => {
 
 When("I should see my new account number displayed", () => {
   cy.visit("https://parabank.parasoft.com/parabank/overview.htm");
-  cy.wait(2000);
+  cy.wait(1000);
+
   cy.get("@newAccountNumber").then((accountNumber) => {
     cy.get("tbody").should("contain.text", accountNumber);
-  });
-});
-
-Then("I attempt to access the Open New Account page directly", () => {
-  cy.visit("https://parabank.parasoft.com/parabank/openaccount.htm", {
-    failOnStatusCode: false,
   });
 });
 
@@ -32,37 +23,10 @@ Then("I should be redirected to the Open New Account page", () => {
     "eq",
     "https://parabank.parasoft.com/parabank/openaccount.htm"
   );
-  cy.get("#openAccountForm").should("contain.text", "Open New Account");
-});
 
-Then("I should see a message {string}", (message) => {
-  cy.wait(2000);
-  cy.contains(message);
-
-  cy.get("#rightPanel").then(($el) => {
-    if ($el.find("#newAccountId").length > 0) {
-      cy.get("#newAccountId")
-        .invoke("text")
-        .then((text) => {
-          cy.wrap(text.trim()).as("newAccountNumber");
-        });
-    } else if ($el.find("#billpayResult").length > 0) {
-      cy.get("#fromAccountId")
-        .invoke("text")
-        .then((text) => {
-          cy.wrap(text.trim()).as("fromAccountId");
-        });
-
-      cy.get("#amount")
-        .invoke("text")
-        .then((text) => {
-          cy.wrap(text.trim().split("$").at(1)).as("amount");
-        });
-    } else {
-      cy.log("No known result section found");
-      return;
-    }
-  });
+  cy.get("#openAccountForm")
+    .should("be.visible")
+    .and("contain.text", "Open New Account");
 });
 
 When("I should be redirected to the login page", () => {

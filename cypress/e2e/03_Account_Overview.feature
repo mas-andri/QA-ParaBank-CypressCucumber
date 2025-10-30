@@ -2,8 +2,10 @@ Feature: Para Bank - Account Overview
 
   Background: Precondition
     Given I open the ParaBank homepage
-    And I log in with username "patrick999" and password "@Patrick999"
-    And I click Account Overview link
+    When I log in with username "patrick999" and password "@Patrick999"
+    And I click the "Log In" button
+    And I click the "Accounts Overview" link
+    And the system saves the first account number and balance
 
   Scenario: TC-010, TC-011 Verify user can view all accounts after login
     Then I should redirected to Account Overview page

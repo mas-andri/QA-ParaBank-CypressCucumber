@@ -1,10 +1,5 @@
 /// <reference types="cypress" />
-import {
-  Before,
-  Given,
-  Then,
-  When,
-} from "@badeball/cypress-cucumber-preprocessor";
+import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
 // let cleanDatabase = false;
 
@@ -22,18 +17,6 @@ import {
 //     cy.get("input[value='Submit']").click();
 //   }
 // });
-
-Given("I open the ParaBank homepage", () => {
-  cy.visit("https://parabank.parasoft.com/parabank/index.htm");
-});
-
-When("I click on the Register button", () => {
-  cy.get('a[href*="register"]').click();
-});
-
-Then("I should be on the Para Bank Register page", () => {
-  cy.get("h1").contains("Signing up is easy!");
-});
 
 When("I enter first name {string}", (firstName) => {
   if (firstName.trim() === "") {
@@ -63,15 +46,15 @@ When("I enter state {string}", (state) => {
   cy.get("[name='customer.address.state']").type(state);
 });
 
-When("I enter zip code {int}", (zipCode) => {
+When("I enter zip code {string}", (zipCode) => {
   cy.get("[name='customer.address.zipCode']").type(zipCode);
 });
 
-When("I enter phone number {int}", (phoneNumber) => {
+When("I enter phone number {string}", (phoneNumber) => {
   cy.get("[name='customer.phoneNumber']").type(phoneNumber);
 });
 
-When("I enter SSN {int}", (ssn) => {
+When("I enter SSN {string}", (ssn) => {
   cy.get("[name='customer.ssn']").type(ssn);
 });
 
@@ -95,16 +78,6 @@ When("I enter confirm password {string}", (confirmPassword) => {
   cy.get("[name='repeatedPassword']").type(confirmPassword);
 });
 
-When("I click register button", () => {
-  cy.get("[value='Register']").click();
-});
-
-// Then("I should be redirected to dashboard page", () => {
-//   cy.get("p").contains(
-//     "Your account was created successfully. You are now logged in."
-//   );
-// });
-
-Then("I should see the relevant page and message {string}", (message) => {
-  cy.xpath("//*[contains(@class, 'form2')] | //p").contains(message);
+Then("I should be on the Para Bank Register page", () => {
+  cy.get("h1").contains("Signing up is easy!");
 });

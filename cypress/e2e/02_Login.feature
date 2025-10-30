@@ -5,10 +5,9 @@ Feature: Para Bank - Login Feature Validation
     Given I open the ParaBank homepage
 
   Scenario Outline: <title>
-    And I enter the username "<username>"
-    And I enter the password "<password>"
+    When I log in with username "<username>" and password "<password>"
     And I click the "Log In" button
-    Then I should see the relevant page and message "<message>"
+    Then I should see a message "<message>"
 
     Examples:
       | title                                        | username   | password    | message                                         |

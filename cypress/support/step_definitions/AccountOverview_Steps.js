@@ -2,18 +2,7 @@
 
 import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
-When("I click Account Overview link", () => {
-  cy.get("a[href='overview.htm']").click();
-
-  // save firts account number
-  cy.get("tbody tr:nth-child(1) td:nth-child(1)")
-    .invoke("text")
-    .then((text) => {
-      cy.wrap(text.trim()).as("accountNumber");
-    });
-});
-
-When("I record the account id and balance", () => {
+When("the system saves the first account number and balance", () => {
   // save the firts account number
   cy.get("tbody tr:nth-child(1) td:nth-child(1)")
     .invoke("text")
@@ -47,14 +36,68 @@ When("I should see the account balance decrease by the payment amount", () => {
   });
 });
 
+When("I click the transaction name", (transactionName) => {
+  cy.wait(1000);
+  cy.get("@payeeName").then((name) => {
+    cy.get("a").contains(name).click();
+  });
+  // cy.get("a", transactionName).click();
+});
+
+When("I save the transaction details", () => {
+  // record the transaction id
+  cy.get("tbody tr:nth-child(1) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("transactionId");
+    });
+
+  // record the transaction date
+  cy.get("tbody tr:nth-child(2) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("transactionDate");
+    });
+
+  // record the transaction description
+  cy.get("tbody tr:nth-child(3) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("transactionDesc");
+    });
+
+  // record the transaction type
+  cy.get("tbody tr:nth-child(4) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("transactionType");
+    });
+
+  // record the transaction amount
+  cy.get("tbody tr:nth-child(5) td:nth-child(2)")
+    .invoke("text")
+    .then((text) => {
+      cy.wrap(text.trim()).as("transactionAmount");
+    });
+});
+
 Then("I should redirected to Account Overview page", () => {
+  cy.url().should("eq", "https://parabank.parasoft.com/parabank/overview.htm");
+
+  cy.get("#showOverview").should("be.visible");
   cy.get("h1").contains("Accounts Overview");
-  cy.get("tbody tr:nth-child(1) td:nth-child(1)").should("be.visible");
 });
 
 Then("I should be redirected to Account Details page", () => {
-  cy.get("h1").contains("Account Details");
-  cy.get("h1").contains("Account Activity");
+  cy.get("@accountNumber").then((accountNumber) => {
+    cy.url().should(
+      "eq",
+      `https://parabank.parasoft.com/parabank/activity.htm?id=${accountNumber}`
+    );
+  });
+
+  cy.get("#accountDetails").should("be.visible");
+  cy.get("#activityForm").should("be.visible");
 });
 
 Then("I should see the account type", () => {
@@ -66,7 +109,7 @@ Then("I should see the account type", () => {
 });
 
 Then("I should see that the account number is correct", () => {
-  cy.wait(2000);
+  cy.wait(1000);
   cy.get("@accountNumber").then((savedNumber) => {
     cy.get("#accountId")
       .invoke("text")
